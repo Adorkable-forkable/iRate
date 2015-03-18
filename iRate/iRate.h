@@ -58,7 +58,13 @@
 IRATE_EXTERN NSUInteger const iRateAppStoreGameGenreID;
 IRATE_EXTERN NSString *const iRateErrorDomain;
 
-//localisation string keys
+//localization string keys
+IRATE_EXTERN NSString *const iRatePrefixMessageTitleKey; //iRatePrefixMessageTitle
+IRATE_EXTERN NSString *const iRatePrefixMessageKey; //iRatePrefixMessage
+IRATE_EXTERN NSString *const iRatePrefixCancelButtonKey; //iRatePrefixCancelButton
+IRATE_EXTERN NSString *const iRatePrefixNegativeButtonKey; //iRatePrefixNegativeButton
+IRATE_EXTERN NSString *const iRatePrefixPositiveButtonKey; //iRatePrefixPositiveButton
+
 IRATE_EXTERN NSString *const iRateMessageTitleKey; //iRateMessageTitle
 IRATE_EXTERN NSString *const iRateAppMessageKey; //iRateAppMessage
 IRATE_EXTERN NSString *const iRateGameMessageKey; //iRateGameMessage
@@ -70,6 +76,10 @@ IRATE_EXTERN NSString *const iRateRateButtonKey; //iRateRateButton
 //notification keys
 IRATE_EXTERN NSString *const iRateCouldNotConnectToAppStore;
 IRATE_EXTERN NSString *const iRateDidDetectAppUpdate;
+
+// TODO
+//IRATE_EXTERN NSString *const iRatePrefixDidPromptForRating;
+
 IRATE_EXTERN NSString *const iRateDidPromptForRating;
 IRATE_EXTERN NSString *const iRateUserDidAttemptToRateApp;
 IRATE_EXTERN NSString *const iRateUserDidDeclineToRateApp;
@@ -91,6 +101,14 @@ typedef NS_ENUM(NSUInteger, iRateErrorCode)
 
 - (void)iRateCouldNotConnectToAppStore:(NSError *)error;
 - (void)iRateDidDetectAppUpdate;
+
+// TODO:
+//- (BOOL)iRatePrefixShouldPromptForRating;
+//- (void)iRatePrefixDidPromptForRating;
+//- (void)iRatePrefixUserDidSelectPositive;
+//- (void)iRatePrefixUserDidSelectNegative;
+//- (void)iRatePrefixUserDidCancel;
+
 - (BOOL)iRateShouldPromptForRating;
 - (void)iRateDidPromptForRating;
 - (void)iRateUserDidAttemptToRateApp;
@@ -123,6 +141,15 @@ typedef NS_ENUM(NSUInteger, iRateErrorCode)
 @property (nonatomic, assign) float daysUntilPrompt;
 @property (nonatomic, assign) float usesPerWeekForPrompt;
 @property (nonatomic, assign) float remindPeriod;
+
+@property (nonatomic, assign) BOOL prefixRatePrompt;
+//prefix message text, you may wish to customise these
+@property (nonatomic, copy) NSString *prefixMessageTitle;
+@property (nonatomic, copy) NSString *prefixMessage;
+@property (nonatomic, copy) NSString *prefixCancelButtonLabel;
+@property (nonatomic, copy) NSString *prefixNegativeButtonLabel;
+@property (copy) void (^negativeButtonPressedHandler)(id prefixAlert);
+@property (nonatomic, copy) NSString *prefixPositiveButtonLabel;
 
 //message text, you may wish to customise these
 @property (nonatomic, copy) NSString *messageTitle;
