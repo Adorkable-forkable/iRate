@@ -107,6 +107,13 @@ static NSString *const iRateMacAppStoreURLFormat = @"macappstore://itunes.apple.
 
 - (void)iRateCouldNotConnectToAppStore:(__unused NSError *)error {}
 - (void)iRateDidDetectAppUpdate {}
+
+- (BOOL)iRatePrefixShouldPromptForRating { return YES; }
+- (void)iRatePrefixDidPromptForRating {}
+- (void)iRatePrefixUserDidSelectPositive {}
+- (void)iRatePrefixUserDidSelectNegative {}
+- (void)iRatePrefixUserDidCancel {}
+
 - (BOOL)iRateShouldPromptForRating { return YES; }
 - (void)iRateDidPromptForRating {}
 - (void)iRateUserDidAttemptToRateApp {}
@@ -871,6 +878,16 @@ static NSString *const iRateMacAppStoreURLFormat = @"macappstore://itunes.apple.
     {
         if (self.prefixRatePrompt)
         {
+            //confirm with delegate
+            if (![self.delegate iRatePrefixShouldPromptForRating])
+            {
+                if (self.verboseLogging)
+                {
+                    NSLog(@"iRate did not display the rating prompt because the iRatePrefixShouldPromptForRating delegate method returned NO");
+                }
+                return;
+            }
+            
             [self showPrefixPrompt];
         } else
         {
@@ -980,7 +997,7 @@ static NSString *const iRateMacAppStoreURLFormat = @"macappstore://itunes.apple.
 #endif
     
     //inform about prompt
-//    [self.delegate iRatePrefixDidPromptForRating];
+    [self.delegate iRatePrefixDidPromptForRating];
 //    [[NSNotificationCenter defaultCenter] postNotificationName:iRatePrefixDidPromptForRating
 //                                                        object:nil];
 }
@@ -1150,14 +1167,17 @@ static NSString *const iRateMacAppStoreURLFormat = @"macappstore://itunes.apple.
 
     if (buttonIndex == positiveButtonIndex)
     {
+        [self.delegate iRatePrefixUserDidSelectPositive];
         [self showRatingPrompt];
     }
     else if (buttonIndex == cancelButtonIndex)
     {
+        [self.delegate iRatePrefixUserDidCancel];
         [self remindLater];
     }
     else if (buttonIndex == negativeButtonIndex)
     {
+        [self.delegate iRatePrefixUserDidSelectNegative];
         self.declinedThisVersion = YES;
 
         if (self.negativeButtonPressedHandler)

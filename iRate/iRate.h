@@ -102,14 +102,13 @@ typedef NS_ENUM(NSUInteger, iRateErrorCode)
 - (void)iRateCouldNotConnectToAppStore:(NSError *)error;
 - (void)iRateDidDetectAppUpdate;
 
-// TODO:
-//- (BOOL)iRatePrefixShouldPromptForRating;
-//- (void)iRatePrefixDidPromptForRating;
-//- (void)iRatePrefixUserDidSelectPositive;
-//- (void)iRatePrefixUserDidSelectNegative;
-//- (void)iRatePrefixUserDidCancel;
+- (BOOL)iRatePrefixShouldPromptForRating;
+- (void)iRatePrefixDidPromptForRating;
+- (void)iRatePrefixUserDidSelectPositive;
+- (void)iRatePrefixUserDidSelectNegative;
+- (void)iRatePrefixUserDidCancel;
 
-- (BOOL)iRateShouldPromptForRating;
+- (BOOL)iRateShouldPromptForRating; // TODO: currently gates all prompts, should be for just rating prompt?
 - (void)iRateDidPromptForRating;
 - (void)iRateUserDidAttemptToRateApp;
 - (void)iRateUserDidDeclineToRateApp;
