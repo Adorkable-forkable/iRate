@@ -1062,6 +1062,7 @@ static NSString *const iRateMacAppStoreURLFormat = @"macappstore://itunes.apple.
             [alert addButtonWithTitle:self.remindButtonLabel];
         }
         
+        alert.tag = RatingAlertTag;
         self.visibleAlert = alert;
         [self.visibleAlert show];
     }
